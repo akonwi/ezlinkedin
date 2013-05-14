@@ -1,5 +1,24 @@
 require "ezlinkedin/version"
+require 'ezlinkedin/request'
+require 'ezlinkedin/client'
+require 'oauth'
 
-module Ezlinkedin
-  # Your code goes here...
+module EzLinkedin
+  class << self
+    attr_accessor :token, :secret, :default_Profile_fields
+
+    # EzLinkedIn.configure do |config|
+    #   config.token = 'consumer_token'
+    #   config.secret = 'consumer_secret'
+    #   config.default_profile_fields = ['education', 'positions']
+    # end
+    #
+    # elsewhere
+    #
+    # client = EzLinkedIn::Client.new
+    def configure
+      yield self
+      true
+    end
+  end
 end

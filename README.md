@@ -1,6 +1,6 @@
 # Ezlinkedin
 
-TODO: Write a gem description
+A simple way to make calls on Linkedin's API
 
 ## Installation
 
@@ -18,8 +18,10 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+		require 'ezlinkedin'
 
+		# Create a client
+		linkedin = EzLinkedin::Client.new("API KEY", "SECRET KEY", options)
 ## Contributing
 
 1. Fork it
