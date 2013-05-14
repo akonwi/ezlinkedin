@@ -1,4 +1,5 @@
 module EzLinkedin
+
 	module Request
 		 DEFAULT_HEADERS = {
         'x-li-format' => 'json'
@@ -14,4 +15,5 @@ module EzLinkedin
           response.body
         end
 	end
+
 end

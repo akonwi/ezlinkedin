@@ -1,6 +1,7 @@
 module EzLinkedin
 	class Client < Object
 		include Request
+		include Api::QueryMethods
 
 		attr_reader :consumer_key, :consumer_secret, :access_token, :client
 		attr_accessor :consumer_options
@@ -23,13 +24,5 @@ module EzLinkedin
 			@access_token = OAuth::AccessToken.new(@client, token, token_secret)
 		end
 
-		# The main option here is an array('fields') of desired profile fields to return
-		def profile(options={})
-			if fields = options.delete(:fields)
-			  get('/people/~:(#{fields.join(,)}))', options)
-			else
-				get('/people/~', options)
-			end
-		end
 	end
 end
