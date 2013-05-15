@@ -1,7 +1,7 @@
 module EzLinkedin
 	class Client
 		include Request
-		include Api
+		include Api::QueryMethods
 
 		attr_reader :consumer_key, :consumer_secret, :access_token, :client
 		attr_accessor :consumer_options
