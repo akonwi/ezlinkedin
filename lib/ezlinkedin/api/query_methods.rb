@@ -5,8 +5,9 @@ module EzLinkedin
 
 			# The main option here is an array('fields') of desired profile fields to return
 			def profile(options={})
-				if fields = options.delete(:fields) || EzLinkedin.default_profile_fields
-					json_text = get('/people/~:(#{fields.join(,)}))', options)
+				fields = options.delete(:fields) || EzLinkedin.default_profile_fields
+				if fields
+					json_text = get("/people/~:(#{fields.join(',')})", options)
 				else
 					json_text = get('/people/~', options)
 				end

@@ -5,7 +5,7 @@ module EzLinkedin
         'x-li-format' => 'json'
       }
 
-      API_PATH = '/v1'
+      API_PATH = "https://api.linkedin.com/v1"
 
       protected
 
@@ -15,9 +15,9 @@ module EzLinkedin
           response.body
         end
 
-       private
+			private
 
-        def raise_errors(response)
+       	def raise_errors(response)
           # Even if the json answer contains the HTTP status code, LinkedIn also sets this code
           # in the HTTP answer (thankfully).
           case response.code.to_i
@@ -38,6 +38,7 @@ module EzLinkedin
             raise EzLinkedin::Errors::UnavailableError, "(#{response.code}): #{response.message}"
           end
         end
+
 	end
 
 end
