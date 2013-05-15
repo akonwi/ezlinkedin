@@ -23,19 +23,19 @@ module EzLinkedin
           case response.code.to_i
           when 401
             data = Mash.from_json(response.body)
-            raise LinkedIn::Errors::UnauthorizedError.new(data), "(#{data.status}): #{data.message}"
+            raise EzLinkedin::Errors::UnauthorizedError.new(data), "(#{data.status}): #{data.message}"
           when 400
             data = Mash.from_json(response.body)
-            raise LinkedIn::Errors::GeneralError.new(data), "(#{data.status}): #{data.message}"
+            raise EzLinkedin::Errors::GeneralError.new(data), "(#{data.status}): #{data.message}"
           when 403
             data = Mash.from_json(response.body)
-            raise LinkedIn::Errors::AccessDeniedError.new(data), "(#{data.status}): #{data.message}"
+            raise EzLinkedin::Errors::AccessDeniedError.new(data), "(#{data.status}): #{data.message}"
           when 404
-            raise LinkedIn::Errors::NotFoundError, "(#{response.code}): #{response.message}"
+            raise EzLinkedin::Errors::NotFoundError, "(#{response.code}): #{response.message}"
           when 500
-            raise LinkedIn::Errors::InformLinkedInError, "LinkedIn had an internal error. Please let them know in the forum. (#{response.code}): #{response.message}"
+            raise EzLinkedin::Errors::InformLinkedInError, "LinkedIn had an internal error. Please let them know in the forum. (#{response.code}): #{response.message}"
           when 502..503
-            raise LinkedIn::Errors::UnavailableError, "(#{response.code}): #{response.message}"
+            raise EzLinkedin::Errors::UnavailableError, "(#{response.code}): #{response.message}"
           end
         end
 	end
