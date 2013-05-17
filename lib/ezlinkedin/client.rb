@@ -10,9 +10,9 @@ module EzLinkedin
 			@consumer_key = c_key
 			@consumer_secret = c_secret
 			@consumer_options = { site: 'https://api.linkedin.com',
-											  request_token_path: '/uas/oauth/requestToken',
-  											access_token_path: '/uas/oauth/accessToken',
-  											authorize_path: '/uas/oauth/authorize' }
+														request_token_path: '/uas/oauth/requestToken',
+  													access_token_path: '/uas/oauth/accessToken',
+  													authorize_path: '/uas/oauth/authorize' }
 			@consumer_options.merge(options)
 			@client = OAuth::Consumer.new(c_key, c_secret, @consumer_options)
 		end
