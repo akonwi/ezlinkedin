@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["akonwi"]
   spec.email         = ["akonwi@gmail.com"]
   spec.description   = "A simple way to make calls on Linkedin's API"
-  spec.summary       = %q{It uses oauth access_tokens}
+  spec.summary       = %q{It's a simple way to access Linkedin and it's coupled well will omniauth}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -25,5 +25,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", '~> 2.6'
+  spec.add_development_dependency 'guard'
+  spec.add_development_dependency 'guard-rspec'
+  spec.add_development_dependency 'libnotify'
   spec.add_development_dependency "webmock", '~> 1.11.0'
 end
