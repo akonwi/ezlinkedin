@@ -1,3 +1,5 @@
+require "cgi"
+
 module EzLinkedin
 	class Client
 		include Request
