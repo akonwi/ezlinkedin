@@ -7,13 +7,13 @@ module EzLinkedin
 			# 
 			# Retrieve a certain profile depending on the options passed in.
 			# @param  options={} [Hash] can be an array of fields and an id,
-			#                           and a url to a public profile. This 
-			#                           can also contain request headers
+			# 	and a url to a public profile. This can also contain request 
+			#   headers
 			# 
 			# @return [Mash] a Mash hash representing the found profile
 			def profile(options={})
 				path = person_path(options)
-				make_query(path, options)
+				make_query(path, options, true)
 			end
 
 
@@ -24,7 +24,22 @@ module EzLinkedin
 			# @return [Mash] Mash hash of connections
 			def connections(options={})
 				path = "#{person_path(options)}/connections"
-				make_query(path, options)
+				make_query(path, options, true)
+			end
+
+			# 
+			# Retrieve the user's social feed
+			# @param  options={} [Hash] visit Linkedin's api to
+			# 	see possible options. it will default to an 
+			#   aggregated feed unless :scope => self. 
+			#   :types => [:shar, :recu, :apps] 
+			#   :count => 5
+			#   :hidden_members => true                        
+			# 
+			# @return [Mash] Mash hash of updates 
+			def network_updates(options={})
+				path = "#{person_path(options)}/network/updates"
+				make_query(path, options, false)
 			end
 
 			private
@@ -40,12 +55,53 @@ module EzLinkedin
 					end
 				end
 
-				def make_query(path, options)
-					fields = options.delete(:fields) || EzLinkedin.default_profile_fields
+				# 
+				# create a valid path to make a restful request
+				# @param  path [String] current path
+				# @param  options [Hash] set of options
+				# @param  use_fields |boolean| does request need fields?
+				#
+				# @return [Mash] hash object with results
+				def make_query(path, options, use_fields)
+
+					fields = options.delete(:fields) || EzLinkedin.default_profile_fields if use_fields
 					if fields
 						path += ":(#{fields.join(',')})"
+					elsif path.end_with? "network/updates"
+						path += network_options(options).to_s # if getting updates, add relevant options to the path
 					end
+
 					Mash.from_json(get(path, options))
+				end
+
+				def network_options(options)
+					path = "?"
+					options_path = nil
+
+					if types = options.delete(:types)
+						types = types.map { |type| "type=#{type.to_s.upcase}" }
+						options_path = types.join('&')
+					end	
+
+					unless options.empty?
+						opts = []
+						options.each do |key,val|
+							opts.push "#{key}=#{val.to_s}"
+						end
+						opts = opts.join('&')
+
+						if options_path.blank?
+							path += opts
+						else
+							options_path += "&#{opts}"
+						end
+					end
+
+					if options_path.nil?
+						""
+					else
+						"#{path}#{options_path}"
+					end
 				end
 		end
 

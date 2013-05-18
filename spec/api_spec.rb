@@ -25,10 +25,15 @@ describe EzLinkedin::Api do
    client.connections.should be_an_instance_of(EzLinkedin::Mash)
  end
 
-#  it "should be able to view network_updates" do
-#    stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates").to_return(:body => "{}")
-#    client.network_updates.should be_an_instance_of(EzLinkedin::Mash)
-#  end
+ it "should be able to view network_updates" do
+   stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates").to_return(:body => "{}")
+   client.network_updates.should be_an_instance_of(EzLinkedin::Mash)
+ end
+
+ it "should be able to view network_updates with options" do
+   stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates?type=SHAR").to_return(:body => "{}")
+   client.network_updates(types: [:shar]).should be_an_instance_of(EzLinkedin::Mash)
+ end
 
 #  it "should be able to view network_update's comments" do
 #    stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates/key=network_update_key/update-comments").to_return(:body => "{}")
