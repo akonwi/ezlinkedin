@@ -20,10 +20,10 @@ describe EzLinkedin::Api do
    client.profile(:id => 123).should be_an_instance_of(EzLinkedin::Mash)
  end
 
-#  it "should be able to view connections" do
-#    stub_request(:get, "https://api.linkedin.com/v1/people/~/connections").to_return(:body => "{}")
-#    client.connections.should be_an_instance_of(EzLinkedin::Mash)
-#  end
+ it "should be able to view connections" do
+   stub_request(:get, "https://api.linkedin.com/v1/people/~/connections").to_return(:body => "{}")
+   client.connections.should be_an_instance_of(EzLinkedin::Mash)
+ end
 
 #  it "should be able to view network_updates" do
 #    stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates").to_return(:body => "{}")

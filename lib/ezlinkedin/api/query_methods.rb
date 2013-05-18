@@ -12,13 +12,24 @@ module EzLinkedin
 			# 
 			# @return [Mash] a Mash hash representing the found profile
 			def profile(options={})
-				path = people_path(options)
+				path = person_path(options)
+				make_query(path, options)
+			end
+
+
+			# 
+			# Retrieve the authenticated user's connections
+			# @param  options={} [Hash] see profile options
+			# 
+			# @return [Mash] Mash hash of connections
+			def connections(options={})
+				path = "#{person_path(options)}/connections"
 				make_query(path, options)
 			end
 
 			private
 
-				def people_path(options)
+				def person_path(options)
 					path = "/people/"
 					if id = options.delete(:id)
 						path += "id=#{id}"
