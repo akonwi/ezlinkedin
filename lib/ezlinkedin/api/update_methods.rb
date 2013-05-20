@@ -12,7 +12,7 @@ module EzLinkedin
 			#                             :description => "A description",
 			#                             :submitted_url => "http...",
 			#                             :submitted_image_url => "http..."
-			#                             }
+			#                             },
 			#               :visibility => { :code => "anyone"}
 			#               })
 			# 
