@@ -2,10 +2,12 @@
 
 A simple way to make calls on Linkedin's API. NOTE: It is not yet completed and does not encompass all of the api at this time. It serves the purpose I made it for but I will continue to develop it.
 
-This is heavily inspired and influenced by pengwynn's linkedin gem. I was having issues with his gem though and there is very little documentation for using it so I decided to redo it myself in order to 
+This is heavily inspired and influenced by pengwynn's linkedin gem. I was having issues with his gem though and there is very little documentation for using it so I decided to redo it myself in order to:
  * Make it work for what I needed
  * Add precise and useful documentation
  * contribute a bit more robust ruby wrapper for Linkedin's API
+
+Most of the tests are from pengwynn's gem
 
 ## Installation
 
