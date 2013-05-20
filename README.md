@@ -32,8 +32,18 @@ Or install it yourself as:
 		# Create a client
 		linkedin = EzLinkedin::Client.new("API KEY", "SECRET KEY", options) # options are the typical OAuth consumer options
 		linkedin.authorize("access_token", "access_token_secret") # tokens obtained from omniauth
+		
+		linkedin.profile(id: 1234, fields: ['name', 'email']
+		linkedin.connections(count: 30)
+		linkedin.network_updates(types: [:shar, :prfx, :conn], count: 50)
+		linkedin.post_share({:comment => "I'm a comment",
+			             :content => { :title => "A title!",
+			                           :description => "A description",
+			                           :submitted_url => "http...",
+			                           :submitted_image_url => "http..." },
+			             :visibility => { :code => "anyone"} })
 
-		Currently, one can post shares, retrieve updates, user profile, and connections.
+Currently, one can post shares, retrieve updates, user profile, and connections.
 		
 ## Contributing
 
