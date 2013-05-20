@@ -6,7 +6,7 @@ module EzLinkedin
 			
 			# 
 			# Retrieve a certain profile depending on the options passed in.
-			# @param  options={} [Hash] can be an array of fields and an id,
+			# @param  options={} [Hash] can be an array of fields as strings and an id,
 			# 	and a url to a public profile. This can also contain request 
 			#   headers
 			# 
@@ -19,7 +19,7 @@ module EzLinkedin
 
 			# 
 			# Retrieve the authenticated user's connections
-			# @param  options={} [Hash] see profile options
+			# @param  options={} [Hash] pass in fields and/or a count
 			# 
 			# @return [Mash] Mash hash of connections
 			def connections(options={})
@@ -31,7 +31,7 @@ module EzLinkedin
 			# Retrieve the user's social feed
 			# @param  options={} [Hash] visit Linkedin's api to
 			# 	see possible options. it will default to an 
-			#   aggregated feed unless :scope => self. 
+			#   aggregated feed unless :scope => 'self'. 
 			#   :types => [:shar, :recu, :apps] 
 			#   :count => 5
 			#   :hidden_members => true                        
@@ -67,6 +67,8 @@ module EzLinkedin
 					fields = options.delete(:fields) || EzLinkedin.default_profile_fields if use_fields
 					if fields
 						path += ":(#{fields.join(',')})"
+					elsif count = options.delete(:count)
+						path += "?count=#{count}"
 					elsif path.end_with? "network/updates"
 						path += network_options(options).to_s # if getting updates, add relevant options to the path
 					end
