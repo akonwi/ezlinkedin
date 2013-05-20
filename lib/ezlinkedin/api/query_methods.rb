@@ -2,7 +2,6 @@ module EzLinkedin
 	module Api
 
 		module QueryMethods
-
 			
 			# 
 			# Retrieve a certain profile depending on the options passed in.

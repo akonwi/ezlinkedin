@@ -15,6 +15,12 @@ module EzLinkedin
           response.body
         end
 
+        def post(path, body='', options={})
+          response = access_token.post("#{API_PATH}#{path}", body, DEFAULT_HEADERS.merge(options))
+          raise_errors(response)
+          response
+        end
+
 			private
 
        	def raise_errors(response)
