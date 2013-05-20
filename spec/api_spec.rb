@@ -31,8 +31,8 @@ describe EzLinkedin::Api do
  end
 
  it "should be able to view network_updates with options" do
-   stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates?type=SHAR").to_return(:body => "{}")
-   client.network_updates(types: [:shar]).should be_an_instance_of(EzLinkedin::Mash)
+   stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates?type=SHAR&count=5&scope=self").to_return(:body => "{}")
+   client.network_updates(types: [:shar], count: 5, scope: 'self').should be_an_instance_of(EzLinkedin::Mash)
  end
 
 #  it "should be able to view network_update's comments" do

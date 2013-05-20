@@ -33,8 +33,7 @@ module EzLinkedin
 			# 	see possible options. it will default to an 
 			#   aggregated feed unless :scope => 'self'. 
 			#   :types => [:shar, :recu, :apps] 
-			#   :count => 5
-			#   :hidden_members => true                        
+			#   :count => 5  
 			# 
 			# @return [Mash] Mash hash of updates 
 			def network_updates(options={})
@@ -67,15 +66,16 @@ module EzLinkedin
 					fields = options.delete(:fields) || EzLinkedin.default_profile_fields if use_fields
 					if fields
 						path += ":(#{fields.join(',')})"
-					elsif count = options.delete(:count)
-						path += "?count=#{count}"
 					elsif path.end_with? "network/updates"
 						path += network_options(options).to_s # if getting updates, add relevant options to the path
+					elsif count = options.delete(:count)
+						path += "?count=#{count}"
 					end
 
 					Mash.from_json(get(path, options))
 				end
 
+				# handle the options passed in pertaining to network updates
 				def network_options(options)
 					path = "?"
 					options_path = nil
@@ -83,26 +83,31 @@ module EzLinkedin
 					if types = options.delete(:types)
 						types = types.map { |type| "type=#{type.to_s.upcase}" }
 						options_path = types.join('&')
-					end	
+					end
 
-					unless options.empty?
-						opts = []
-						options.each do |key,val|
-							opts.push "#{key}=#{val.to_s}"
-						end
-						opts = opts.join('&')
+					if count = options.delete(:count)
+						string = "count=#{count}"
+						options_path = add_to_path(string, options_path)
+					end
 
-						if options_path.blank?
-							path += opts
-						else
-							options_path += "&#{opts}"
-						end
+					if scope = options.delete(:scope)
+						string = "scope=self"
+						options_path = add_to_path(string, options_path)
 					end
 
 					if options_path.nil?
 						""
 					else
 						"#{path}#{options_path}"
+					end
+				end
+
+				# helper for previous method
+				def add_to_path(option, options_path)
+					if options_path.nil?
+						options_path = option
+					else
+						options_path += "&#{option}"
 					end
 				end
 		end
