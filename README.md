@@ -25,24 +25,25 @@ Or install it yourself as:
 
 ## Usage
 
-		This is meant to be used alongside omniauth. Obtain access tokens from omniauth authentication and then use them to make api calls.
+This is meant to be used alongside omniauth. Obtain access tokens from omniauth authentication and then use them to make api calls.
 
-		require 'ezlinkedin'
+```ruby
+require 'ezlinkedin'
 
-		# Create a client
-		linkedin = EzLinkedin::Client.new("API KEY", "SECRET KEY", options) # options are the typical OAuth consumer options
-		linkedin.authorize("access_token", "access_token_secret") # tokens obtained from omniauth
+# Create a client
+linkedin = EzLinkedin::Client.new("API KEY", "SECRET KEY", options) # options are the typical OAuth consumer options
+linkedin.authorize("access_token", "access_token_secret") # tokens obtained from omniauth
 		
-		linkedin.profile(id: 1234, fields: ['name', 'email']
-		linkedin.connections(count: 30)
-		linkedin.network_updates(types: [:shar, :prfx, :conn], count: 50)
-		linkedin.post_share({:comment => "I'm a comment",
-			             :content => { :title => "A title!",
-			                           :description => "A description",
-			                           :submitted_url => "http...",
-			                           :submitted_image_url => "http..." },
-			             :visibility => { :code => "anyone"} })
-
+linkedin.profile(id: 1234, fields: ['name', 'email']
+linkedin.connections(count: 30)
+linkedin.network_updates(types: [:shar, :prfx, :conn], count: 50)
+linkedin.post_share({:comment => "I'm a comment",
+	             :content => { :title => "A title!",
+	                           :description => "A description",
+	                           :submitted_url => "http...",
+	                           :submitted_image_url => "http..." },
+	             :visibility => { :code => "anyone"} })
+```
 Currently, one can post shares, retrieve updates, user profile, and connections.
 		
 ## Contributing
