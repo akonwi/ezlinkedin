@@ -2,13 +2,13 @@ module EzLinkedin
 	module Api
 
 		module QueryMethods
-			
-			# 
+
+			#
 			# Retrieve a certain profile depending on the options passed in.
 			# @param  options={} [Hash] can be an array of fields as strings and an id,
-			# 	and a url to a public profile. This can also contain request 
+			# 	and a url to a public profile. This can also contain request
 			#   headers
-			# 
+			#
 			# @return [Mash] a Mash hash representing the found profile
 			def profile(options={})
 				path = person_path(options)
@@ -16,28 +16,43 @@ module EzLinkedin
 			end
 
 
-			# 
+			#
 			# Retrieve the authenticated user's connections
 			# @param  options={} [Hash] pass in fields and/or a count
-			# 
+			#
 			# @return [Mash] Mash hash of connections
 			def connections(options={})
 				path = "#{person_path(options)}/connections"
 				make_query(path, options, true)
 			end
 
-			# 
+			#
 			# Retrieve the user's social feed
 			# @param  options={} [Hash] visit Linkedin's api to
-			# 	see possible options. it will default to an 
-			#   aggregated feed unless :scope => 'self'. 
-			#   :types => [:shar, :recu, :apps] 
-			#   :count => 5  
-			# 
-			# @return [Mash] Mash hash of updates 
+			# 	see possible options. it will default to an
+			#   aggregated feed unless :scope => 'self'.
+			#   :types => [:shar, :recu, :apps]
+			#   :count => 5
+			#
+			# @return [Mash] Mash hash of updates
 			def network_updates(options={})
 				path = "#{person_path(options)}/network/updates"
 				make_query(path, options, false)
+			end
+
+
+			#
+			# Do a company search based on id, email, or universal-name
+			# @param  options={} [Hash] parameters to search by, includes:
+			#   id, universal-name(pass it in as :name), email-domain(:domain).
+			#   options can also include a string array of fields to return. See
+			#   the linkedin api for available fields
+			#
+			# @return [type] [description]
+			def company(options={})
+				path = company_path(options)
+				fields = options.include?(:fields)
+				make_query(path, options, fields)
 			end
 
 			private
@@ -53,7 +68,23 @@ module EzLinkedin
 					end
 				end
 
-				# 
+				def company_path(options)
+					path = "/companies"
+					id = options.delete(:id)
+					name = options.delete(:name)
+					domain = options.delete(:domain)
+					if id && name
+						path += "::(#{id},universal-name=#{CGI.escape(name)})"
+					elsif id
+						path += "/#{id}"
+					elsif name
+						path += "/universal-name=#{name}"
+					elsif domain
+						path += "?email-domain=#{domain}"
+					end
+				end
+
+				#
 				# create a valid path to make a restful request
 				# @param  path [String] current path
 				# @param  options [Hash] set of options

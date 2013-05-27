@@ -99,36 +99,36 @@ describe EzLinkedin::Api do
 #    response.code.should == "201"
 #  end
 #
-#  context "Company API" do
-#    # use_vcr_cassette
-#
-#    it "should be able to view a company profile" do
-#      stub_request(:get, "https://api.linkedin.com/v1/companies/id=1586").to_return(:body => "{}")
-#      client.company(:id => 1586).should be_an_instance_of(EzLinkedin::Mash)
-#    end
-#
-#    it "should be able to view a company by universal name" do
-#      stub_request(:get, "https://api.linkedin.com/v1/companies/universal-name=acme").to_return(:body => "{}")
-#      client.company(:name => 'acme').should be_an_instance_of(EzLinkedin::Mash)
-#    end
-#
-#    it "should be able to view a company by e-mail domain" do
-#      stub_request(:get, "https://api.linkedin.com/v1/companies/email-domain=acme.com").to_return(:body => "{}")
-#      client.company(:domain => 'acme.com').should be_an_instance_of(EzLinkedin::Mash)
-#    end
-#
-#    it "should load correct company data" do
-#      client.company(:id => 1586).name.should == "Amazon"
-#
-#      data = client.company(:id => 1586, :fields => %w{ id name industry locations:(address:(city state country-code) is-headquarters) employee-count-range })
-#      data.id.should == 1586
-#      data.name.should == "Amazon"
-#      data.employee_count_range.name.should == "10001+"
-#      data.industry.should == "Internet"
-#      data.locations.all[0].address.city.should == "Seattle"
-#      data.locations.all[0].is_headquarters.should == true
-#    end
-#  end
+ context "Company API" do
+   # use_vcr_cassette
+
+   it "should be able to view a company profile" do
+     stub_request(:get, "https://api.linkedin.com/v1/companies/1586").to_return(:body => "{}")
+     client.company(:id => 1586).should be_an_instance_of(EzLinkedin::Mash)
+   end
+
+   it "should be able to view a company by universal name" do
+     stub_request(:get, "https://api.linkedin.com/v1/companies/universal-name=acme").to_return(:body => "{}")
+     client.company(:name => 'acme').should be_an_instance_of(EzLinkedin::Mash)
+   end
+
+   it "should be able to view a company by e-mail domain" do
+     stub_request(:get, "https://api.linkedin.com/v1/companies?email-domain=acme.com").to_return(:body => "{}")
+     client.company(:domain => 'acme.com').should be_an_instance_of(EzLinkedin::Mash)
+   end
+
+   # it "should load correct company data" do
+   #   client.company(:id => 1586).name.should == "Amazon"
+
+   #   data = client.company(:id => 1586, :fields => %w{ id name industry locations:(address:(city state country-code) is-headquarters) employee-count-range })
+   #   data.id.should == 1586
+   #   data.name.should == "Amazon"
+   #   data.employee_count_range.name.should == "10001+"
+   #   data.industry.should == "Internet"
+   #   data.locations.all[0].address.city.should == "Seattle"
+   #   data.locations.all[0].is_headquarters.should == true
+   # end
+ end
 
 #  context "Group API" do
 #
