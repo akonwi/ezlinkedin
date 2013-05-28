@@ -5,6 +5,7 @@ require 'ezlinkedin/mash'
 require 'ezlinkedin/client'
 require 'ezlinkedin/errors'
 require 'oauth'
+require 'open-uri'
 
 module EzLinkedin
   class << self

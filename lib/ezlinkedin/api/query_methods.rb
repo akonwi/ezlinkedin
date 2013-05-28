@@ -74,11 +74,11 @@ module EzLinkedin
 					name = options.delete(:name)
 					domain = options.delete(:domain)
 					if id && name
-						path += "::(#{id},universal-name=#{CGI.escape(name)})"
+						path += "::(#{id},universal-name=#{URI::encode(name)})"
 					elsif id
 						path += "/#{id}"
 					elsif name
-						path += "/universal-name=#{name}"
+						path += "/universal-name=#{URI::encode(name)}"
 					elsif domain
 						path += "?email-domain=#{domain}"
 					end
