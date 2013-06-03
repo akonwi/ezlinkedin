@@ -48,11 +48,23 @@ module EzLinkedin
 			#   options can also include a string array of fields to return. See
 			#   the linkedin api for available fields
 			#
-			# @return [type] [description]
+			# @return [Mash] Mash hash of results
 			def company(options={})
 				path = company_path(options)
-				fields = options.include?(:fields)
-				make_query(path, options, fields)
+				use_fields = options.include?(:fields)
+				make_query(path, options, use_fields)
+			end
+
+
+			#
+			# Returns the groups the current user is a member of
+			# @param  options={} [Hash] can include a string array
+			#   containing the names of fields to get from each group
+			#
+			# @return [Mash] Mash hash of results
+			def group_memberships(options={})
+				path = "#{person_path(options)}/group-memberships#{group_options(options)}"
+				make_query(path, options.merge({member: true}), false)
 			end
 
 			private
@@ -84,6 +96,7 @@ module EzLinkedin
 					end
 				end
 
+
 				#
 				# create a valid path to make a restful request
 				# @param  path [String] current path
@@ -100,6 +113,8 @@ module EzLinkedin
 						path += network_options(options).to_s # if getting updates, add relevant options to the path
 					elsif count = options.delete(:count)
 						path += "?count=#{count}"
+					elsif member = options.delete(:member)
+						path += "?membership-state=member"
 					end
 
 					Mash.from_json(get(path, options))
@@ -138,6 +153,12 @@ module EzLinkedin
 						options_path = option
 					else
 						options_path += "&#{option}"
+					end
+				end
+
+				def group_options(options)
+					if fields = options.delete(:fields)
+						path = ":(group:(#{fields.join(',')}))"
 					end
 				end
 		end

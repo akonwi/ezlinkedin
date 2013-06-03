@@ -130,22 +130,27 @@ describe EzLinkedin::Api do
    # end
  end
 
-#  context "Group API" do
-#
-#    it "should be able to list group memberships for a profile" do
-#      stub_request(:get, "https://api.linkedin.com/v1/people/~/group-memberships").to_return(:body => "{}")
-#      client.group_memberships.should be_an_instance_of(EzLinkedin::Mash)
-#    end
-#
-#    it "should be able to join a group" do
-#      stub_request(:put, "https://api.linkedin.com/v1/people/~/group-memberships/123").to_return(:body => "", :status => 201)
-#
-#      response = client.join_group(123)
-#      response.body.should == nil
-#      response.code.should == "201"
-#    end
-#
-#  end
+ context "Group API" do
+
+   it "should be able to list group memberships for a profile" do
+     stub_request(:get, "https://api.linkedin.com/v1/people/~/group-memberships?membership-state=member").to_return(:body => "{}")
+     client.group_memberships.should be_an_instance_of(EzLinkedin::Mash)
+   end
+
+   it "should be able to get group memberships given an option of fields" do
+     stub_request(:get, "https://api.linkedin.com/v1/people/~/group-memberships:(group:(id,name))?membership-state=member").to_return(:body => "{}")
+     client.group_memberships(fields: ['id', 'name']).should be_an_instance_of(EzLinkedin::Mash)
+   end
+
+   it "should be able to join a group" do
+     stub_request(:put, "https://api.linkedin.com/v1/people/~/group-memberships/123").to_return(:body => "", :status => 201)
+
+     response = client.join_group(123)
+     response.body.should == nil
+     response.code.should == "201"
+   end
+
+ end
 
   context "Errors" do
     it "should raise AccessDeniedError when EzLinkedin returns 403 status code" do
