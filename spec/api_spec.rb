@@ -45,29 +45,35 @@ describe EzLinkedin::Api do
 #    client.share_likes("network_update_key").should be_an_instance_of(EzLinkedin::Mash)
 #  end
 #
-#  it "should be able to search with a keyword if given a String" do
-#    stub_request(:get, "https://api.linkedin.com/v1/people-search?keywords=business").to_return(:body => "{}")
-#    client.search("business").should be_an_instance_of(EzLinkedin::Mash)
-#  end
-#
-#  it "should be able to search with an option" do
-#    stub_request(:get, "https://api.linkedin.com/v1/people-search?first-name=Javan").to_return(:body => "{}")
-#    client.search(:first_name => "Javan").should be_an_instance_of(EzLinkedin::Mash)
-#  end
-#
-#  it "should be able to search with an option and fetch specific fields" do
-#    stub_request(:get, "https://api.linkedin.com/v1/people-search:(num-results,total)?first-name=Javan").to_return(
-#        :body => "{}")
-#    client.search(:first_name => "Javan", :fields => ["num_results", "total"]).should be_an_instance_of(EzLinkedin::Mash)
-#  end
-#
+ it "should be able to search with a keyword if given a String" do
+   stub_request(:get, "https://api.linkedin.com/v1/people-search?keywords=business").to_return(:body => "{}")
+   client.search("business").should be_an_instance_of(EzLinkedin::Mash)
+ end
+
+ it "should be able to search with an option" do
+   stub_request(:get, "https://api.linkedin.com/v1/people-search?first-name=Javan").to_return(:body => "{}")
+   client.search(:first_name => "Javan").should be_an_instance_of(EzLinkedin::Mash)
+ end
+
+ it "should be able to search with an option and fetch specific fields" do
+   stub_request(:get, "https://api.linkedin.com/v1/people-search:(people:(id,first-name),num-results)?first-name=Javan").to_return(
+       :body => "{}")
+   client.search(:first_name => "Javan", :people => ["id", "first-name"], :fields => ['num-results']).should be_an_instance_of(EzLinkedin::Mash)
+ end
+
+it "should be able to search companies" do
+   stub_request(:get, "https://api.linkedin.com/v1/company-search:(companies:(id,name),num-results)?name=apple").to_return(
+       :body => "{}")
+   client.search({:name => "apple", :company => ["id", "name"], :fields => ['num-results']}, "company").should be_an_instance_of(EzLinkedin::Mash)
+ end
+
  it "should be able to post a share" do
    stub_request(:post, "https://api.linkedin.com/v1/people/~/shares").to_return(:body => "", :status => 201)
    response = client.post_share({:comment => "Testing, 1, 2, 3"})
    response.body.should == nil
    response.code.should == "201"
  end
-#
+
 #  it "should be able to comment on network update" do
 #    stub_request(:post, "https://api.linkedin.com/v1/people/~/network/updates/key=SOMEKEY/update-comments").to_return(
 #        :body => "", :status => 201)

@@ -1,6 +1,7 @@
 require "ezlinkedin/version"
 require 'ezlinkedin/request'
 require 'ezlinkedin/api'
+require 'ezlinkedin/search'
 require 'ezlinkedin/mash'
 require 'ezlinkedin/client'
 require 'ezlinkedin/errors'
