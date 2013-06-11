@@ -35,16 +35,6 @@ describe EzLinkedin::Api do
    client.network_updates(types: [:shar], count: 5, scope: 'self').should be_an_instance_of(EzLinkedin::Mash)
  end
 
-#  it "should be able to view network_update's comments" do
-#    stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates/key=network_update_key/update-comments").to_return(:body => "{}")
-#    client.share_comments("network_update_key").should be_an_instance_of(EzLinkedin::Mash)
-#  end
-
-#  it "should be able to view network_update's likes" do
-#    stub_request(:get, "https://api.linkedin.com/v1/people/~/network/updates/key=network_update_key/likes").to_return(:body => "{}")
-#    client.share_likes("network_update_key").should be_an_instance_of(EzLinkedin::Mash)
-#  end
-#
  it "should be able to search with a keyword if given a String" do
    stub_request(:get, "https://api.linkedin.com/v1/people-search?keywords=business").to_return(:body => "{}")
    client.search("business").should be_an_instance_of(EzLinkedin::Mash)
@@ -74,39 +64,7 @@ it "should be able to search companies" do
    response.code.should == "201"
  end
 
-#  it "should be able to comment on network update" do
-#    stub_request(:post, "https://api.linkedin.com/v1/people/~/network/updates/key=SOMEKEY/update-comments").to_return(
-#        :body => "", :status => 201)
-#    response = client.update_comment('SOMEKEY', "Testing, 1, 2, 3")
-#    response.body.should == nil
-#    response.code.should == "201"
-#  end
-#
-#  it "should be able to send a message" do
-#    stub_request(:post, "https://api.linkedin.com/v1/people/~/mailbox").to_return(:body => "", :status => 201)
-#    response = client.send_message("subject", "body", ["recip1", "recip2"])
-#    response.body.should == nil
-#    response.code.should == "201"
-#  end
-#
-#  it "should be able to like a network update" do
-#    stub_request(:put, "https://api.linkedin.com/v1/people/~/network/updates/key=SOMEKEY/is-liked").
-#      with(:body => "true").to_return(:body => "", :status => 201)
-#    response = client.like_share('SOMEKEY')
-#    response.body.should == nil
-#    response.code.should == "201"
-#  end
-#
-#  it "should be able to unlike a network update" do
-#    stub_request(:put, "https://api.linkedin.com/v1/people/~/network/updates/key=SOMEKEY/is-liked").
-#      with(:body => "false").to_return(:body => "", :status => 201)
-#    response = client.unlike_share('SOMEKEY')
-#    response.body.should == nil
-#    response.code.should == "201"
-#  end
-#
  context "Company API" do
-   # use_vcr_cassette
 
    it "should be able to view a company profile" do
      stub_request(:get, "https://api.linkedin.com/v1/companies/1586").to_return(:body => "{}")
@@ -123,17 +81,6 @@ it "should be able to search companies" do
      client.company(:domain => 'acme.com').should be_an_instance_of(EzLinkedin::Mash)
    end
 
-   # it "should load correct company data" do
-   #   client.company(:id => 1586).name.should == "Amazon"
-
-   #   data = client.company(:id => 1586, :fields => %w{ id name industry locations:(address:(city state country-code) is-headquarters) employee-count-range })
-   #   data.id.should == 1586
-   #   data.name.should == "Amazon"
-   #   data.employee_count_range.name.should == "10001+"
-   #   data.industry.should == "Internet"
-   #   data.locations.all[0].address.city.should == "Seattle"
-   #   data.locations.all[0].is_headquarters.should == true
-   # end
  end
 
  context "Group API" do
