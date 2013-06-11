@@ -6,7 +6,7 @@ module EzLinkedin
 		# @param  options [Hash or String] Hash of search criteria or
 		#     a string of keyword(s).
 		#     In order to specify fields for a resource(companies or people):
-		#     pass in the fields as a hash of hashes.
+		#     pass in the fields as a hash of arrays.
 		#       client.search(:people => ['id', 'first-name'], fields: ['num-results'])
 		#       client.search(:companies => ['id', 'name'])
 		# @param  type="people" [String or symbol] :people or :company search?
@@ -17,7 +17,11 @@ module EzLinkedin
 
 			if options.is_a?(Hash)
 				if type_fields = options.delete(type.to_sym)
-					path += ":(#{type.to_s}:(#{type_fields.join(',')})#{search_fields(options)})"
+					if type != 'people'
+						path += ":(companies:(#{type_fields.join(',')})#{search_fields(options)})"
+					else
+						path += ":(people:(#{type_fields.join(',')})#{search_fields(options)})"
+					end
 				end
 				path += configure_fields(options)
 			elsif options.is_a?(String)

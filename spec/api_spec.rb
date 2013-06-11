@@ -62,9 +62,9 @@ describe EzLinkedin::Api do
  end
 
 it "should be able to search companies" do
-   stub_request(:get, "https://api.linkedin.com/v1/company-search:(companies:(id,name),num-results)?name=apple").to_return(
+   stub_request(:get, "https://api.linkedin.com/v1/company-search:(companies:(id,name),num-results)?keywords=apple").to_return(
        :body => "{}")
-   client.search({:name => "apple", :company => ["id", "name"], :fields => ['num-results']}, "company").should be_an_instance_of(EzLinkedin::Mash)
+   client.search({:keywords => "apple", :company => ["id", "name"], :fields => ['num-results']}, "company").should be_an_instance_of(EzLinkedin::Mash)
  end
 
  it "should be able to post a share" do
