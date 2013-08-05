@@ -45,7 +45,7 @@ module EzLinkedin
 			# Do a company search based on id, email, or universal-name
 			# @param  options={} [Hash] parameters to search by, includes:
 			#   id, universal-name(pass it in as :name), email-domain(:domain).
-			#   options can also include a string array of fields to return. See
+			#   The 'fields' option only works if you search with an id. See
 			#   the linkedin api for available fields
 			#
 			# @return [Mash] Mash hash of results
