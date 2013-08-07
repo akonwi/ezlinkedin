@@ -27,6 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", '~> 2.6'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-rspec'
-  spec.add_development_dependency 'rb-inotify'
+  spec.add_development_dependency 'terminal-notifier-guard'
   spec.add_development_dependency "webmock", '~> 1.11.0'
 end
