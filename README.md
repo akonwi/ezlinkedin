@@ -34,6 +34,7 @@ require 'ezlinkedin'
 linkedin = EzLinkedin::Client.new("API KEY", "SECRET KEY", options) # options are the typical OAuth consumer options
 linkedin.authorize("access_token", "access_token_secret") # tokens obtained from omniauth
 
+# make calls on linkedin
 linkedin.profile(id: 1234, fields: ['name', 'email']
 linkedin.connections(count: 30)
 linkedin.network_updates(types: [:shar, :prfx, :conn], count: 50)
@@ -43,12 +44,16 @@ linkedin.post_share({:comment => "I'm a comment",
 	                           :submitted_url => "http...",
 	                           :submitted_image_url => "http..." },
 	             :visibility => { :code => "anyone"} })
+linkedin.search(company: ['id', 'name'], keywords: 'apple')
+linkedin.search(people: ['first-name', 'id'], last_name: 'johnson')
 ```
+
 Currently, one can:
 	* post shares
 	* retrieve network updates, user profile, and connections
-	* search for companies
+	* search for companies and people
 	* use the company and people search api
+  * join groups
 
 ## TODO
 
