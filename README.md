@@ -52,7 +52,7 @@ Currently, one can:
 * post shares
 * retrieve network updates, user profile, and connections
 * search for companies and people
-* use the company and people search api
+* join groups
 
 ## TODO
 
