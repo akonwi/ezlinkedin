@@ -1,4 +1,5 @@
 # Ezlinkedin
+[![Gem Version](https://badge.fury.io/rb/ezlinkedin.png)](http://badge.fury.io/rb/ezlinkedin)
 
 A simple way to make calls on Linkedin's API. NOTE: It is not yet completed and does not encompass all of the api at this time. It serves the purpose I made it for but I will continue to develop it.
 
